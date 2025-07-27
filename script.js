@@ -121,8 +121,7 @@ chatForm.addEventListener("submit", async (event) => {
         const response = await fetch(supabaseFunctionUrl, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${supabaseAnonKey}`
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(requestBody),
             signal: controller.signal
