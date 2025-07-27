@@ -196,7 +196,7 @@ h1 {
     box-shadow: 0 0 15px var(--primary-glow);
 }
 
-#send-button {
+#send-button, #clear-chat-button {
     border: 1px solid var(--border-color);
     background: rgba(255, 255, 255, 0.1);
     color: white;
@@ -209,7 +209,7 @@ h1 {
     transition: all 0.3s ease;
 }
 
-#send-button:hover {
+#send-button:hover, #clear-chat-button:hover {
     background: rgba(255, 255, 255, 0.2);
     border-color: rgba(255, 255, 255, 0.4);
 }
@@ -217,6 +217,16 @@ h1 {
 #send-button:disabled {
     opacity: 0.5;
     cursor: not-allowed;
+}
+
+#clear-chat-button {
+    background: rgba(255, 75, 43, 0.1);
+    border-color: rgba(255, 75, 43, 0.3);
+}
+
+#clear-chat-button:hover {
+    background: rgba(255, 75, 43, 0.2);
+    border-color: rgba(255, 75, 43, 0.5);
 }
 
 /* Add these styles for image upload and history */
@@ -293,4 +303,119 @@ h1 {
     max-width: 200px;
     border-radius: 8px;
     margin-top: 0.5rem;
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+    body {
+        padding: 0.25rem;
+        padding-bottom: 80px; /* Space for disclaimer */
+    }
+    
+    .container {
+        padding: 1rem;
+        max-width: 100%;
+        margin: 0;
+        border-radius: 10px;
+        gap: 0.75rem;
+    }
+    
+    .logo {
+        width: 60px;
+    }
+    
+    h1 {
+        font-size: 1.5rem;
+    }
+    
+    .subtitle {
+        font-size: 0.8rem;
+    }
+    
+    #chat-window {
+        height: 300px;
+        padding: 1rem;
+    }
+    
+    .chat-message {
+        max-width: 90%;
+        padding: 0.5rem 0.75rem;
+        font-size: 0.9rem;
+    }
+    
+    #chat-form {
+        gap: 0.25rem;
+        flex-wrap: wrap;
+    }
+    
+    #chat-input {
+        padding: 0.5rem;
+        font-size: 0.85rem;
+        min-width: 0;
+    }
+    
+    #send-button, #clear-chat-button, .file-upload-label {
+        padding: 0.4rem;
+        min-width: 44px; /* Touch target size */
+    }
+    
+    .disclaimer {
+        font-size: 0.55rem;
+        padding: 0.5rem;
+        line-height: 1.2;
+    }
+    
+    .footer {
+        font-size: 0.65rem;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 0.125rem;
+        padding-bottom: 90px;
+    }
+    
+    .container {
+        padding: 0.75rem;
+        border-radius: 8px;
+    }
+    
+    h1 {
+        font-size: 1.25rem;
+    }
+    
+    .subtitle {
+        font-size: 0.75rem;
+    }
+    
+    #chat-window {
+        height: 250px;
+        padding: 0.75rem;
+    }
+    
+    .chat-message {
+        max-width: 95%;
+        padding: 0.4rem 0.6rem;
+        font-size: 0.85rem;
+    }
+    
+    #chat-input {
+        padding: 0.4rem;
+        font-size: 0.8rem;
+    }
+    
+    #send-button, #clear-chat-button, .file-upload-label {
+        padding: 0.35rem;
+    }
+    
+    .disclaimer {
+        font-size: 0.5rem;
+        padding: 0.4rem;
+    }
+    
+    .social-link svg {
+        width: 20px;
+        height: 20px;
+    }
 }

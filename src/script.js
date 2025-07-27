@@ -32,6 +32,10 @@ function loadChatHistory() {
         messages.forEach(msg => {
             addMessage(msg.text, msg.sender, msg.hasImage ? msg.imageData : null);
         });
+    } else {
+        // Add initial bot message when no chat history exists
+        addMessage("Hi! I'm Sara from TeaLeak.com. Are you wondering if your information was leaked? Feel free to ask me anything or share a screenshot if you need help!", "bot");
+        saveChatHistory();
     }
 }
 
@@ -222,19 +226,39 @@ function addMessage(text, sender, imageSrc = null) {
     chatWindow.scrollTop = chatWindow.scrollHeight;
 }
 
+// Event listeners
+document.addEventListener('DOMContentLoaded', () => {
+    loadChatHistory();
+    chatInput.focus();
+    
+    // Add event listener for clear chat button
+    const clearButton = document.getElementById('clear-chat-button');
+    if (clearButton) {
+        clearButton.addEventListener('click', () => {
+            if (confirm('Are you sure you want to clear the chat history?')) {
+                clearChatHistory();
+            }
+        });
+    }
+});
+
 // Add keyboard shortcut for clearing chat (Ctrl+Shift+C)
-document.addEventListener('keydown', function (e) {
+document.addEventListener('keydown', (e) => {
     if (e.ctrlKey && e.shiftKey && e.key === 'C') {
-        if (confirm('Clear all chat history?')) {
+        if (confirm('Are you sure you want to clear the chat history?')) {
             clearChatHistory();
         }
     }
 });
 
-// Load chat history on page load
-document.addEventListener('DOMContentLoaded', function () {
-    loadChatHistory();
-    chatInput.focus();
+// Auto-clear chat history when user leaves the page
+window.addEventListener('beforeunload', () => {
+    clearChatHistory();
+});
+
+// Also clear on page hide (for mobile browsers)
+window.addEventListener('pagehide', () => {
+    clearChatHistory();
 });
 
 export { loadChatHistory, clearChatHistory, addMessage };
