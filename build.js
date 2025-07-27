@@ -10,6 +10,11 @@ let htmlContent = fs.readFileSync(htmlPath, 'utf8');
 const supabaseFunctionUrl = process.env.SUPABASE_FUNCTION_URL || 'https://keuxuonslkcvdeysdoge.supabase.co/functions/v1/gemini-tea';
 const supabaseAnonKey = process.env.SUPABASE_ANON_KEY || '';
 
+// Debug logging for Vercel
+console.log('Environment variables during build:');
+console.log('SUPABASE_FUNCTION_URL:', supabaseFunctionUrl);
+console.log('SUPABASE_ANON_KEY:', supabaseAnonKey ? '[SET]' : '[NOT SET]');
+
 // Create the environment variables script
 const envScript = `
     <script>

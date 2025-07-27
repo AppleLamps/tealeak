@@ -2,14 +2,10 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "installCommand": "npm install",
-  "env": {
-    "SUPABASE_FUNCTION_URL": "@supabase-function-url",
-    "SUPABASE_ANON_KEY": "@supabase-anon-key"
-  },
   "build": {
     "env": {
-      "SUPABASE_FUNCTION_URL": "@supabase-function-url",
-      "SUPABASE_ANON_KEY": "@supabase-anon-key"
+      "SUPABASE_FUNCTION_URL": "$SUPABASE_FUNCTION_URL",
+      "SUPABASE_ANON_KEY": "$SUPABASE_ANON_KEY"
     }
   },
   "headers": [
