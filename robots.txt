@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# point crawlers at your sitemap
+Sitemap: https://tealeak.com/sitemap.xml
