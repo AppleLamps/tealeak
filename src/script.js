@@ -6,9 +6,9 @@ const sendButton = document.getElementById("send-button");
 const fileUpload = document.getElementById("file-upload");
 const imagePreviewContainer = document.getElementById("image-preview-container");
 
-// Environment variables for Vercel deployment
-const supabaseFunctionUrl = window.SUPABASE_FUNCTION_URL || 'https://keuxuonslkcvdeysdoge.supabase.co/functions/v1/gemini-tea';
-const supabaseAnonKey = window.SUPABASE_ANON_KEY || '';
+// Environment variables using Vite's import.meta.env
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+const supabaseFunctionUrl = import.meta.env.VITE_SUPABASE_FUNCTION_URL;
 
 // Global variables for image handling
 let selectedImageData = null;
@@ -60,7 +60,7 @@ function handleImageSelection(event) {
     }
 
     const reader = new FileReader();
-    reader.onload = function(e) {
+    reader.onload = function (e) {
         selectedImageData = e.target.result.split(',')[1]; // Remove data:image/...;base64, prefix
         selectedImageMimeType = file.type;
         showImagePreview(e.target.result);
@@ -88,23 +88,26 @@ function removeImagePreview() {
     fileUpload.value = '';
 }
 
+// Make removeImagePreview globally accessible
+window.removeImagePreview = removeImagePreview;
+
 // Chat Form Submission
 chatForm.addEventListener("submit", async (event) => {
     event.preventDefault();
     const message = chatInput.value.trim();
-    
+
     // Require either message or image
     if (!message && !selectedImageData) return;
 
     // Add user message to chat
     addMessage(message, "user", selectedImageData ? `data:${selectedImageMimeType};base64,${selectedImageData}` : null);
-    
+
     // Clear inputs
     chatInput.value = "";
     const imageDataToSend = selectedImageData;
     const mimeTypeToSend = selectedImageMimeType;
     removeImagePreview();
-    
+
     sendButton.disabled = true;
 
     try {
@@ -121,7 +124,8 @@ chatForm.addEventListener("submit", async (event) => {
         const response = await fetch(supabaseFunctionUrl, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${supabaseAnonKey}`
             },
             body: JSON.stringify(requestBody),
             signal: controller.signal
@@ -134,7 +138,7 @@ chatForm.addEventListener("submit", async (event) => {
         }
 
         const data = await response.json();
-        if(data.error) {
+        if (data.error) {
             throw new Error(data.error);
         }
 
@@ -179,7 +183,7 @@ function formatResponse(text) {
 
     // Convert *italics* to <em>
     safeText = safeText.replace(/\*(.*?)\*/g, '<em>$1</em>');
-    
+
     // Convert newlines to <br> tags for paragraphs
     safeText = safeText.replace(/\n/g, '<br>');
 
@@ -203,7 +207,7 @@ function addMessage(text, sender, imageSrc = null) {
     } else {
         // User messages as plain text
         messageElement.textContent = text;
-        
+
         // Add image if provided
         if (imageSrc) {
             const imageElement = document.createElement('img');
@@ -219,7 +223,7 @@ function addMessage(text, sender, imageSrc = null) {
 }
 
 // Add keyboard shortcut for clearing chat (Ctrl+Shift+C)
-document.addEventListener('keydown', function(e) {
+document.addEventListener('keydown', function (e) {
     if (e.ctrlKey && e.shiftKey && e.key === 'C') {
         if (confirm('Clear all chat history?')) {
             clearChatHistory();
@@ -228,7 +232,9 @@ document.addEventListener('keydown', function(e) {
 });
 
 // Load chat history on page load
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     loadChatHistory();
     chatInput.focus();
 });
+
+export { loadChatHistory, clearChatHistory, addMessage };

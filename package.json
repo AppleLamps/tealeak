@@ -1,19 +1,21 @@
 {
   "name": "tealeak-website",
+  "private": true,
   "version": "1.0.0",
+  "type": "module",
   "description": "TeaLeak.com - Satirical news site with AI chatbot",
-  "main": "index.html",
   "scripts": {
-    "build": "node build.js",
-    "dev": "python -m http.server 8000",
-    "start": "python -m http.server 8000"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "keywords": [
     "satirical",
     "news",
     "chatbot",
     "ai",
-    "gemini"
+    "gemini",
+    "vite"
   ],
   "author": "TeaLeak.com",
   "license": "MIT",
@@ -24,5 +26,8 @@
     "type": "git",
     "url": "https://github.com/yourusername/tealeak-website.git"
   },
-  "homepage": "https://tealeak.com"
+  "homepage": "https://tealeak.com",
+  "devDependencies": {
+    "vite": "^7.0.4"
+  }
 }
